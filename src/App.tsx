@@ -18,16 +18,17 @@ import "./App.css";
 import RecordForm from "./components/RecordForm";
 
 function App() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const [state, dispatch] = useReducer(recordsReducer, initialState);
+  const { recordData, newRecord, recordBeingEdited, loading } = state;
+
   const { searchValue, handleSearchChange, handleSearchClear, filterResults } =
     useBasicSearch();
-
-  const { recordData, newRecord, recordBeingEdited, loading } = state;
   const { currentPage, pageUp, pageDown, jumpToPage, allPages } = usePagination(
     1,
     2
   );
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   function toggleEdit(recordToToggle: string | null) {
     dispatch({
