@@ -52,11 +52,18 @@ export default function RecordListItem({
             />
           </div>
           <div className="input-container">
-            <input
-              type="text"
-              onChange={handleChange("condition")}
+            <select
               value={unsavedData.condition}
-            />
+              onChange={handleChange("condition")}
+            >
+              {Object.keys(RecordCondition)
+                .filter((conditionKey) => isNaN(Number(conditionKey)))
+                .map((conditionName) => (
+                  <option key={conditionName} value={conditionName}>
+                    {conditionName}
+                  </option>
+                ))}
+            </select>
           </div>
           <div className="input-container">
             <input

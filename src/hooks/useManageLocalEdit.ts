@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
 
 export default function useManageLocalEdit({
   defaultData,
@@ -11,7 +11,11 @@ export default function useManageLocalEdit({
   const [data, setData] = useState(() => defaultData);
 
   function handleChange(fieldName: string) {
-    return (e: React.ChangeEvent<HTMLInputElement>) =>
+    return (
+      e:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.ChangeEvent<HTMLSelectElement>
+    ) =>
       setData((currentData: any) => ({
         ...currentData,
         [fieldName]: e.target?.value,
