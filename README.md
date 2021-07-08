@@ -76,3 +76,9 @@ For example, the `RecordList` is a series of composed reusable components:
 ```
 
 > **_Improvements:_** To be truly composable, the styles also have to be configurable and a property. I didn't have time to implement this unfortunately.
+
+
+## Improvements / Areas of Focus
+
+- The HTML in this application isn't really 'semantic' -- I did shortcut a bit with divs and spans for times sake
+- Testing -- likewise I'd typically use RTL, but I cut that out of my workflow for the time constraint.
