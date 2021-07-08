@@ -1,97 +1,48 @@
-import { RecordCondition } from "../../types";
-import useManageLocalEdit from "../../hooks/useManageLocalEdit";
+import { Record } from "../../types";
 import "./styles.css";
+import RecordForm from "../RecordForm";
+import { MouseEventHandler } from "react";
 
 interface Props {
-  title: string;
-  year: number;
-  condition: RecordCondition;
-  artistName: string;
-  artistId: number;
+  record: Record;
   onRecordSave: Function;
   onRecordRemove: Function;
+  toggleEdit: Function;
+  isEditing: boolean;
 }
 
 export default function RecordListItem({
-  title,
-  year,
-  condition,
-  artistName,
-  artistId,
+  record,
   onRecordSave,
   onRecordRemove,
+  toggleEdit,
+  isEditing,
 }: Props): JSX.Element {
-  const { handleChange, unsavedData, save, toggleEdit, isEditing } =
-    useManageLocalEdit({
-      defaultData: {
-        albumTitle: title,
-        year,
-        condition,
-        artist: {
-          name: artistName,
-          id: artistId,
-        },
-      },
-      onSave: onRecordSave,
-    });
+  const {
+    albumTitle,
+    year,
+    condition,
+    artist: { name: artistName },
+  } = record;
 
   return (
     <div className="RecordList_item">
       {isEditing ? (
-        <>
-          <div className="input-container">
-            <input
-              type="text"
-              onChange={handleChange("albumTitle")}
-              value={unsavedData.albumTitle}
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="number"
-              onChange={handleChange("year")}
-              value={unsavedData.year}
-            />
-          </div>
-          <div className="input-container">
-            <select
-              value={unsavedData.condition}
-              onChange={handleChange("condition")}
-            >
-              {Object.keys(RecordCondition)
-                .filter((conditionKey) => isNaN(Number(conditionKey)))
-                .map((conditionName) => (
-                  <option key={conditionName} value={conditionName}>
-                    {conditionName}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              onChange={handleChange("artist.name")}
-              value={unsavedData.artist.name}
-            />
-          </div>
-
-          <button type="button" onClick={save}>
-            Save
-          </button>
-          <button type="button" onClick={toggleEdit}>
-            Cancel
-          </button>
-        </>
+        <RecordForm
+          recordData={record}
+          onSave={onRecordSave}
+          onCancel={() => toggleEdit(null)}
+        />
       ) : (
         <>
-          <span>{title}</span>
+          <span>{albumTitle}</span>
           <span>{year}</span>
           <span>{condition}</span>
           <span>{artistName}</span>
-          <button type="button" onClick={toggleEdit}>
+          <button type="button" onClick={() => toggleEdit(albumTitle)}>
             Edit
           </button>
-          <button type="button" onClick={() => onRecordRemove(title)}>
+          <button type="button" onClick={() => onRecordRemove(albumTitle)}>
             Remove
           </button>
         </>

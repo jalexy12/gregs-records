@@ -1,23 +1,17 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useState } from "react";
 
 interface Props {
   defaultData: any;
-  onSave: Function;
 }
 
 interface LocalEditState {
   handleChange: Function;
   unsavedData: any;
-  save: MouseEventHandler;
-  toggleEdit: MouseEventHandler;
-  isEditing: boolean;
 }
 
 export default function useManageLocalEdit({
   defaultData,
-  onSave,
 }: Props): LocalEditState {
-  const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState(() => defaultData);
 
   function handleChange(fieldName: string) {
@@ -47,25 +41,8 @@ export default function useManageLocalEdit({
       });
   }
 
-  function toggleEdit() {
-    if (isEditing) {
-      setData(defaultData);
-      setIsEditing(false);
-    } else {
-      setIsEditing(true);
-    }
-  }
-
-  function save() {
-    onSave(data);
-    setIsEditing(false);
-  }
-
   return {
     handleChange,
     unsavedData: data,
-    save,
-    toggleEdit,
-    isEditing,
   };
 }

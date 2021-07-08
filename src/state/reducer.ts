@@ -4,6 +4,8 @@ import { Record } from "../types";
 export const initialState: RecordState = {
   recordData: [],
   loading: false,
+  newRecord: null,
+  recordBeingEdited: null,
 };
 
 export default function recordsReducer(
@@ -22,12 +24,23 @@ export default function recordsReducer(
         recordData: action.payload,
         loading: false,
       };
+
+    case RecordActionList.START_CREATE_NEW:
+      return {
+        ...state,
+        newRecord: { artist: {} },
+      };
     case RecordActionList.REMOVE_RECORD:
       return {
         ...state,
         recordData: state.recordData.filter(
           (record) => record.albumTitle !== action.payload
         ),
+      };
+    case RecordActionList.TOGGLE_RECORD_EDIT:
+      return {
+        ...state,
+        recordBeingEdited: action.payload,
       };
     case RecordActionList.UPDATE_RECORD:
       const currentRecordIndex: number = state.recordData.findIndex(
@@ -57,6 +70,12 @@ export default function recordsReducer(
           action.payload.record,
           ...currentCollection.slice(currentRecordIndex + 1),
         ],
+        recordBeingEdited: null,
+      };
+    case RecordActionList.CANCEL_CREATE:
+      return {
+        ...state,
+        newRecord: null,
       };
     default:
       return state;

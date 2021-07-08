@@ -15,17 +15,25 @@ import Pagination, { usePagination } from "./components/Pagination";
 import { RecordActionList } from "./state/types";
 import { Record } from "./types";
 import "./App.css";
+import RecordForm from "./components/RecordForm";
 
 function App() {
   const [state, dispatch] = useReducer(recordsReducer, initialState);
   const { searchValue, handleSearchChange, handleSearchClear, filterResults } =
     useBasicSearch();
 
-  const { recordData, loading } = state;
+  const { recordData, newRecord, recordBeingEdited, loading } = state;
   const { currentPage, pageUp, pageDown, jumpToPage, allPages } = usePagination(
     1,
     2
   );
+
+  function toggleEdit(recordToToggle: string | null) {
+    dispatch({
+      type: RecordActionList.TOGGLE_RECORD_EDIT,
+      payload: recordToToggle,
+    });
+  }
 
   useFetchRecords({
     page: currentPage,
@@ -37,7 +45,7 @@ function App() {
     toggleLoadOn: () =>
       dispatch({ type: RecordActionList.SET_LOADING, payload: true }),
   });
-
+  console.log(recordBeingEdited);
   return (
     <RecordList>
       <RecordListHeader>
@@ -54,19 +62,29 @@ function App() {
           handleClear={handleSearchClear}
           searchValue={searchValue}
         />
+        <button
+          onClick={() => dispatch({ type: RecordActionList.START_CREATE_NEW })}
+        >
+          Create New
+        </button>
       </RecordListHeader>
       <RecordListContent loading={loading}>
         <RecordListHeadingRow
           titles={["Title", "Year", "Condition", "Artist Name"]}
         />
+        {newRecord && (
+          <RecordForm
+            recordData={newRecord}
+            onSave={() => {}}
+            onCancel={() => dispatch({ type: RecordActionList.CANCEL_CREATE })}
+          />
+        )}
         {filterResults(recordData).map((record: Record) => (
           <RecordListItem
             key={record.albumTitle}
-            title={record.albumTitle}
-            year={record.year}
-            condition={record.condition}
-            artistName={record.artist.name}
-            artistId={record.artist.id}
+            record={record}
+            isEditing={recordBeingEdited === record.albumTitle}
+            toggleEdit={toggleEdit}
             onRecordRemove={(removalRecordName: string) =>
               dispatch({
                 type: RecordActionList.REMOVE_RECORD,
