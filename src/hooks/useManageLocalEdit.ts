@@ -16,10 +16,25 @@ export default function useManageLocalEdit({
         | React.ChangeEvent<HTMLInputElement>
         | React.ChangeEvent<HTMLSelectElement>
     ) =>
-      setData((currentData: any) => ({
-        ...currentData,
-        [fieldName]: e.target?.value,
-      }));
+      setData((currentData: any) => {
+        const [fieldKey, subFieldKey] = fieldName.split(".");
+        const isNested = !!subFieldKey;
+
+        if (isNested) {
+          return {
+            ...currentData,
+            [fieldKey]: {
+              ...currentData[fieldKey],
+              [subFieldKey]: e.target?.value,
+            },
+          };
+        } else {
+          return {
+            ...currentData,
+            [fieldName]: e.target?.value,
+          };
+        }
+      });
   }
 
   function toggleEdit() {

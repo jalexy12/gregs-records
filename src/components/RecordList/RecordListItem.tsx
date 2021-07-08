@@ -68,8 +68,8 @@ export default function RecordListItem({
           <div className="input-container">
             <input
               type="text"
-              onChange={handleChange("artistName")}
-              value={unsavedData.artistName}
+              onChange={handleChange("artist.name")}
+              value={unsavedData.artist.name}
             />
           </div>
 
