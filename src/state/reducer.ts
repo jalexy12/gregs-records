@@ -2,7 +2,6 @@ import { RecordAction, RecordActionList, RecordState } from "./types";
 
 export const initialState: RecordState = {
   recordData: [],
-  page: 1,
   loading: false,
 };
 

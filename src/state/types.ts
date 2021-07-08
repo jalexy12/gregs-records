@@ -1,9 +1,17 @@
 import { Record } from "../types";
+import { MouseEventHandler } from "react";
 
 export type RecordState = {
   recordData: Record[];
-  page: number;
   loading: boolean;
+};
+
+export type PageState = {
+  currentPage: number;
+  pageUp: MouseEventHandler;
+  pageDown: MouseEventHandler;
+  jumpToPage: Function;
+  allPages: number[];
 };
 
 export enum RecordActionList {

@@ -7,8 +7,9 @@ import {
   RecordListHeader,
   RecordListHeadingRow,
   RecordListItem,
+  RecordListFooter,
 } from "./components/RecordList";
-
+import Pagination, { usePagination } from "./components/Pagination";
 import { RecordActionList } from "./state/types";
 import { Record } from "./types";
 import "./App.css";
@@ -16,10 +17,14 @@ import "./App.css";
 function App() {
   const [state, dispatch] = useReducer(recordsReducer, initialState);
 
-  const { recordData, page, loading } = state;
+  const { recordData, loading } = state;
+  const { currentPage, pageUp, pageDown, jumpToPage, allPages } = usePagination(
+    1,
+    2
+  );
 
   useFetchRecords({
-    page,
+    page: currentPage,
     onLoad: (records: Record[]) =>
       dispatch({
         type: RecordActionList.RECORDS_LOADED,
@@ -46,6 +51,15 @@ function App() {
           />
         ))}
       </RecordListContent>
+      <RecordListFooter>
+        <Pagination
+          currentPage={currentPage}
+          handlePageUp={pageUp}
+          handlePageDown={pageDown}
+          handleJumpToPage={jumpToPage}
+          allPages={allPages}
+        />
+      </RecordListFooter>
     </RecordList>
   );
 }
