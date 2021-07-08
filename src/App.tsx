@@ -67,6 +67,12 @@ function App() {
             condition={record.condition}
             artistName={record.artist.name}
             artistId={record.artist.id}
+            onRecordRemove={(removalRecordName: string) =>
+              dispatch({
+                type: RecordActionList.REMOVE_RECORD,
+                payload: removalRecordName,
+              })
+            }
             onRecordSave={(newRecord: Record) =>
               dispatch({
                 type: RecordActionList.UPDATE_RECORD,

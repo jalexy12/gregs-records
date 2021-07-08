@@ -18,6 +18,7 @@ export enum RecordActionList {
   SET_LOADING = "SET_LOADING",
   RECORDS_LOADED = "RECORDS_LOADED",
   UPDATE_RECORD = "UPDATE_RECORD",
+  REMOVE_RECORD = "REMOVE_RECORD",
 }
 
 export type RecordAction =
@@ -26,4 +27,8 @@ export type RecordAction =
   | {
       type: RecordActionList.UPDATE_RECORD;
       payload: { previousAlbumTitle: string; record: Record };
+    }
+  | {
+      type: RecordActionList.REMOVE_RECORD;
+      payload: string;
     };

@@ -9,6 +9,7 @@ interface Props {
   artistName: string;
   artistId: number;
   onRecordSave: Function;
+  onRecordRemove: Function;
 }
 
 export default function RecordListItem({
@@ -18,6 +19,7 @@ export default function RecordListItem({
   artistName,
   artistId,
   onRecordSave,
+  onRecordRemove,
 }: Props): JSX.Element {
   const { handleChange, unsavedData, save, toggleEdit, isEditing } =
     useManageLocalEdit({
@@ -88,6 +90,9 @@ export default function RecordListItem({
           <span>{artistName}</span>
           <button type="button" onClick={toggleEdit}>
             Edit
+          </button>
+          <button type="button" onClick={() => onRecordRemove(title)}>
+            Remove
           </button>
         </>
       )}

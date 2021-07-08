@@ -22,6 +22,13 @@ export default function recordsReducer(
         recordData: action.payload,
         loading: false,
       };
+    case RecordActionList.REMOVE_RECORD:
+      return {
+        ...state,
+        recordData: state.recordData.filter(
+          (record) => record.albumTitle !== action.payload
+        ),
+      };
     case RecordActionList.UPDATE_RECORD:
       const currentRecordIndex: number = state.recordData.findIndex(
         (record) => record.albumTitle === action.payload.previousAlbumTitle
