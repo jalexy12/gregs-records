@@ -1,4 +1,5 @@
 import { RecordAction, RecordActionList, RecordState } from "./types";
+import { Record } from "../types";
 
 export const initialState: RecordState = {
   recordData: [],
@@ -25,20 +26,22 @@ export default function recordsReducer(
       const currentRecordIndex: number = state.recordData.findIndex(
         (record) => record.albumTitle === action.payload.previousAlbumTitle
       );
-      console.log({
-        ...state,
-        recordData: [
-          ...state.recordData.slice(0, currentRecordIndex),
-          action.payload.record,
-          ...state.recordData.slice(currentRecordIndex + 1),
-        ],
-      });
+      const currentRecord: Record = state.recordData[currentRecordIndex];
+      const currentCollection =
+        currentRecord.artist.name !== action.payload.record.artist.name
+          ? state.recordData.map((oldRecord) =>
+              oldRecord.artist.id === action.payload.record.artist.id
+                ? { ...oldRecord, artist: { ...action.payload.record.artist } }
+                : oldRecord
+            )
+          : state.recordData;
+
       return {
         ...state,
         recordData: [
-          ...state.recordData.slice(0, currentRecordIndex),
+          ...currentCollection.slice(0, currentRecordIndex),
           action.payload.record,
-          ...state.recordData.slice(currentRecordIndex + 1),
+          ...currentCollection.slice(currentRecordIndex + 1),
         ],
       };
     default:
