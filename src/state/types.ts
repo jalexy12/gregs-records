@@ -24,6 +24,7 @@ export enum RecordActionList {
   REMOVE_RECORD = "REMOVE_RECORD",
   START_CREATE_NEW = "START_CREATE_NEW",
   CANCEL_CREATE = "CANCEL_CREATE",
+  SAVE_NEW_RECORD = "SAVE_NEW_RECORD",
 }
 
 export type RecordAction =
@@ -39,4 +40,5 @@ export type RecordAction =
     }
   | { type: RecordActionList.START_CREATE_NEW }
   | { type: RecordActionList.TOGGLE_RECORD_EDIT; payload: string | null }
-  | { type: RecordActionList.CANCEL_CREATE };
+  | { type: RecordActionList.CANCEL_CREATE }
+  | { type: RecordActionList.SAVE_NEW_RECORD; payload: Record };

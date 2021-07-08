@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import useFetchRecords from "./hooks/useFetchRecords";
 import useBasicSearch from "./hooks/useBasicSearch";
 import recordsReducer, { initialState } from "./state/reducer";
@@ -27,12 +27,19 @@ function App() {
     1,
     2
   );
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   function toggleEdit(recordToToggle: string | null) {
     dispatch({
       type: RecordActionList.TOGGLE_RECORD_EDIT,
       payload: recordToToggle,
     });
+  }
+
+  function onStartCreateNew() {
+    dispatch({ type: RecordActionList.START_CREATE_NEW });
+
+    requestAnimationFrame(() => inputRef.current?.focus());
   }
 
   useFetchRecords({
@@ -45,7 +52,7 @@ function App() {
     toggleLoadOn: () =>
       dispatch({ type: RecordActionList.SET_LOADING, payload: true }),
   });
-  console.log(recordBeingEdited);
+
   return (
     <RecordList>
       <RecordListHeader>
@@ -62,22 +69,28 @@ function App() {
           handleClear={handleSearchClear}
           searchValue={searchValue}
         />
-        <button
-          onClick={() => dispatch({ type: RecordActionList.START_CREATE_NEW })}
-        >
-          Create New
-        </button>
+        <button onClick={onStartCreateNew}>Create New</button>
       </RecordListHeader>
       <RecordListContent loading={loading}>
         <RecordListHeadingRow
           titles={["Title", "Year", "Condition", "Artist Name"]}
         />
         {newRecord && (
-          <RecordForm
-            recordData={newRecord}
-            onSave={() => {}}
-            onCancel={() => dispatch({ type: RecordActionList.CANCEL_CREATE })}
-          />
+          <div className="RecordList_item">
+            <RecordForm
+              recordData={newRecord}
+              onSave={(recordToCreate: Record) =>
+                dispatch({
+                  type: RecordActionList.SAVE_NEW_RECORD,
+                  payload: recordToCreate,
+                })
+              }
+              onCancel={() =>
+                dispatch({ type: RecordActionList.CANCEL_CREATE })
+              }
+              inputRef={inputRef}
+            />
+          </div>
         )}
         {filterResults(recordData).map((record: Record) => (
           <RecordListItem

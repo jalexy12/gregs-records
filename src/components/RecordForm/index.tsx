@@ -1,3 +1,4 @@
+import React from "react";
 import { RecordCondition } from "../../types";
 import useManageLocalEdit from "../../hooks/useManageLocalEdit";
 
@@ -5,12 +6,14 @@ interface Props {
   recordData: any;
   onSave: Function;
   onCancel: Function;
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export default function RecordForm({
   recordData,
   onSave,
   onCancel,
+  inputRef,
 }: Props): JSX.Element {
   const { handleChange, unsavedData } = useManageLocalEdit({
     defaultData: recordData,
@@ -23,6 +26,7 @@ export default function RecordForm({
           type="text"
           onChange={handleChange("albumTitle")}
           value={unsavedData.albumTitle}
+          ref={inputRef}
         />
       </div>
       <div className="input-container">

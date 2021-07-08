@@ -1,5 +1,5 @@
 import { RecordAction, RecordActionList, RecordState } from "./types";
-import { Record } from "../types";
+import { Record, RecordCondition } from "../types";
 
 export const initialState: RecordState = {
   recordData: [],
@@ -28,7 +28,21 @@ export default function recordsReducer(
     case RecordActionList.START_CREATE_NEW:
       return {
         ...state,
-        newRecord: { artist: {} },
+        newRecord: {
+          albumTitle: "",
+          artist: {
+            name: "",
+            id: Math.random() * 400,
+          },
+          year: 2021,
+          condition: RecordCondition[RecordCondition.good],
+        },
+      };
+    case RecordActionList.SAVE_NEW_RECORD:
+      return {
+        ...state,
+        recordData: state.recordData.concat([action.payload]),
+        newRecord: null,
       };
     case RecordActionList.REMOVE_RECORD:
       return {
