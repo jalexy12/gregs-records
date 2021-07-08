@@ -36,6 +36,13 @@ export default function recordsReducer(
             )
           : state.recordData;
 
+      if (currentRecord.artist.name !== action.payload.record.artist.name) {
+        localStorage.setItem(
+          `artistId:${action.payload.record.artist.id}`,
+          action.payload.record.artist.name
+        );
+      }
+
       return {
         ...state,
         recordData: [
