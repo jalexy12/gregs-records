@@ -1,12 +1,22 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
+
+interface Props {
+  defaultData: any;
+  onSave: Function;
+}
+
+interface LocalEditState {
+  handleChange: Function;
+  unsavedData: any;
+  save: MouseEventHandler;
+  toggleEdit: MouseEventHandler;
+  isEditing: boolean;
+}
 
 export default function useManageLocalEdit({
   defaultData,
   onSave,
-}: {
-  defaultData: any;
-  onSave: Function;
-}) {
+}: Props): LocalEditState {
   const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState(() => defaultData);
 

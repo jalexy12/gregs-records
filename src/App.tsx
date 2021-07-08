@@ -1,6 +1,8 @@
 import React, { useReducer } from "react";
 import useFetchRecords from "./hooks/useFetchRecords";
+import useBasicSearch from "./hooks/useBasicSearch";
 import recordsReducer, { initialState } from "./state/reducer";
+import SearchBar from "./components/SearchBar";
 import {
   RecordList,
   RecordListContent,
@@ -16,6 +18,8 @@ import "./App.css";
 
 function App() {
   const [state, dispatch] = useReducer(recordsReducer, initialState);
+  const { searchValue, handleSearchChange, handleSearchClear, filterResults } =
+    useBasicSearch();
 
   const { recordData, loading } = state;
   const { currentPage, pageUp, pageDown, jumpToPage, allPages } = usePagination(
@@ -36,12 +40,26 @@ function App() {
 
   return (
     <RecordList>
-      <RecordListHeader />
+      <RecordListHeader>
+        <h3>Records</h3>
+        <Pagination
+          currentPage={currentPage}
+          handlePageUp={pageUp}
+          handlePageDown={pageDown}
+          handleJumpToPage={jumpToPage}
+          allPages={allPages}
+        />
+        <SearchBar
+          handleSearchChange={handleSearchChange}
+          handleClear={handleSearchClear}
+          searchValue={searchValue}
+        />
+      </RecordListHeader>
       <RecordListContent loading={loading}>
         <RecordListHeadingRow
           titles={["Title", "Year", "Condition", "Artist Name"]}
         />
-        {recordData.map((record: Record) => (
+        {filterResults(recordData).map((record: Record) => (
           <RecordListItem
             key={record.albumTitle}
             title={record.albumTitle}

@@ -5,5 +5,5 @@ export default function RecordList({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return <div>{children}</div>;
+  return <div className="RecordList">{children}</div>;
 }

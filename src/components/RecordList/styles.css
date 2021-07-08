@@ -1,3 +1,16 @@
+.RecordList {
+  padding: 1rem;
+}
+
+.RecordList_header {
+  align-items: center;
+  display: flex;
+}
+
+.RecordList_header h3 {
+  margin-right: 1rem;
+}
+
 .RecordList_item,
 .RecordList_titles {
   display: flex;
