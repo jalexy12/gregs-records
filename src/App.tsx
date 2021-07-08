@@ -37,7 +37,7 @@ function App() {
   return (
     <RecordList>
       <RecordListHeader />
-      <RecordListContent>
+      <RecordListContent loading={loading}>
         <RecordListHeadingRow
           titles={["Title", "Year", "Condition", "Artist Name"]}
         />
