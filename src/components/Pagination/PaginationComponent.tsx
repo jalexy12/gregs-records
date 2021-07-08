@@ -23,7 +23,7 @@ export default function PaginationComponent({
         </button>
       )}
       {allPages.map((page) => (
-        <button type="button" onClick={() => handleJumpToPage(page)}>
+        <button key={page} type="button" onClick={() => handleJumpToPage(page)}>
           {page}
         </button>
       ))}

@@ -17,8 +17,13 @@ export type PageState = {
 export enum RecordActionList {
   SET_LOADING = "SET_LOADING",
   RECORDS_LOADED = "RECORDS_LOADED",
+  UPDATE_RECORD = "UPDATE_RECORD",
 }
 
 export type RecordAction =
   | { type: RecordActionList.SET_LOADING; payload: boolean }
-  | { type: RecordActionList.RECORDS_LOADED; payload: Record[] };
+  | { type: RecordActionList.RECORDS_LOADED; payload: Record[] }
+  | {
+      type: RecordActionList.UPDATE_RECORD;
+      payload: { previousAlbumTitle: string; record: Record };
+    };

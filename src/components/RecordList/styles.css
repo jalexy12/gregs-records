@@ -5,8 +5,9 @@
 }
 
 .RecordList_item span,
-.RecordList_titles span {
-  flex-basis: 25%;
+.RecordList_titles span,
+.RecordList_item .input-container {
+  flex-basis: 20%;
 }
 
 .RecordList_item {

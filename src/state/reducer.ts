@@ -21,6 +21,26 @@ export default function recordsReducer(
         recordData: action.payload,
         loading: false,
       };
+    case RecordActionList.UPDATE_RECORD:
+      const currentRecordIndex: number = state.recordData.findIndex(
+        (record) => record.albumTitle === action.payload.previousAlbumTitle
+      );
+      console.log({
+        ...state,
+        recordData: [
+          ...state.recordData.slice(0, currentRecordIndex),
+          action.payload.record,
+          ...state.recordData.slice(currentRecordIndex + 1),
+        ],
+      });
+      return {
+        ...state,
+        recordData: [
+          ...state.recordData.slice(0, currentRecordIndex),
+          action.payload.record,
+          ...state.recordData.slice(currentRecordIndex + 1),
+        ],
+      };
     default:
       return state;
   }

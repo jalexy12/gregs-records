@@ -43,11 +43,21 @@ function App() {
         />
         {recordData.map((record: Record) => (
           <RecordListItem
+            key={record.albumTitle}
             title={record.albumTitle}
             year={record.year}
             condition={record.condition}
             artistName={record.artist.name}
             artistId={record.artist.id}
+            onRecordSave={(newRecord: Record) =>
+              dispatch({
+                type: RecordActionList.UPDATE_RECORD,
+                payload: {
+                  previousAlbumTitle: record.albumTitle,
+                  record: newRecord,
+                },
+              })
+            }
           />
         ))}
       </RecordListContent>
