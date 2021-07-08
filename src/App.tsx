@@ -1,11 +1,17 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import useFetchRecords from "./hooks/useFetchRecords";
-import processRecords from "./helpers/processRecords";
-import { getRecords } from "./api";
 import recordsReducer, { initialState } from "./state/reducer";
-import "./App.css";
+import {
+  RecordList,
+  RecordListContent,
+  RecordListHeader,
+  RecordListHeadingRow,
+  RecordListItem,
+} from "./components/RecordList";
+
 import { RecordActionList } from "./state/types";
 import { Record } from "./types";
+import "./App.css";
 
 function App() {
   const [state, dispatch] = useReducer(recordsReducer, initialState);
@@ -23,8 +29,25 @@ function App() {
       dispatch({ type: RecordActionList.SET_LOADING, payload: true }),
   });
 
-  console.log(recordData, loading);
-  return <div className="App">Hello</div>;
+  return (
+    <RecordList>
+      <RecordListHeader />
+      <RecordListContent>
+        <RecordListHeadingRow
+          titles={["Title", "Year", "Condition", "Artist Name"]}
+        />
+        {recordData.map((record: Record) => (
+          <RecordListItem
+            title={record.albumTitle}
+            year={record.year}
+            condition={record.condition}
+            artistName={record.artist.name}
+            artistId={record.artist.id}
+          />
+        ))}
+      </RecordListContent>
+    </RecordList>
+  );
 }
 
 export default App;

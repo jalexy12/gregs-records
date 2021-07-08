@@ -1,0 +1,26 @@
+.RecordList_item,
+.RecordList_titles {
+  display: flex;
+  flex-basis: 100%;
+}
+
+.RecordList_item span,
+.RecordList_titles span {
+  flex-basis: 25%;
+}
+
+.RecordList_item {
+  margin-bottom: 0.5rem;
+}
+
+.RecordList_titles {
+  margin-bottom: 1rem;
+}
+
+.RecordList_titles span {
+  font-weight: bold;
+}
+
+.RecordList_content {
+  padding: 1rem;
+}
