@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import "./style.css";
 
 interface Props {
   currentPage: number;
@@ -16,14 +17,19 @@ export default function PaginationComponent({
   allPages,
 }: Props): JSX.Element {
   return (
-    <div>
+    <div className="pagination">
       {currentPage > 1 && (
         <button type="button" onClick={handlePageDown}>
           &lt;
         </button>
       )}
       {allPages.map((page) => (
-        <button key={page} type="button" onClick={() => handleJumpToPage(page)}>
+        <button
+          key={page}
+          className={page === currentPage ? "active" : ""}
+          type="button"
+          onClick={() => handleJumpToPage(page)}
+        >
           {page}
         </button>
       ))}

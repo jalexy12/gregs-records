@@ -1,10 +1,21 @@
 .RecordList {
   padding: 1rem;
+  width: 75%;
 }
 
 .RecordList_header {
   align-items: center;
   display: flex;
+}
+
+.RecordList_header > * {
+  display: flex;
+  justify-content: center;
+  flex-basis: 33%;
+}
+
+.RecordList_header > .button-container {
+  justify-content: flex-start;
 }
 
 .RecordList_header h3 {
@@ -24,6 +35,7 @@
 }
 
 .RecordList_item {
+  align-items: center;
   margin-bottom: 0.5rem;
 }
 
@@ -35,6 +47,12 @@
   font-weight: bold;
 }
 
-.RecordList_content {
+.RecordList_content,
+.RecordList_header {
   padding: 1rem;
+}
+
+.RecordList_footer {
+  display: flex;
+  justify-content: center;
 }

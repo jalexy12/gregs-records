@@ -1,0 +1,8 @@
+.pagination button {
+  background: none;
+  border: 0;
+}
+
+.pagination button.active {
+  color: blue;
+}

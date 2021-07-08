@@ -1,7 +1,8 @@
 import { Record } from "../../types";
 import "./styles.css";
 import RecordForm from "../RecordForm";
-import { MouseEventHandler } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   record: Record;
@@ -39,11 +40,19 @@ export default function RecordListItem({
           <span>{year}</span>
           <span>{condition}</span>
           <span>{artistName}</span>
-          <button type="button" onClick={() => toggleEdit(albumTitle)}>
-            Edit
+          <button
+            className="icon-button green"
+            type="button"
+            onClick={() => toggleEdit(albumTitle)}
+          >
+            <FontAwesomeIcon icon={faPencilAlt} />
           </button>
-          <button type="button" onClick={() => onRecordRemove(albumTitle)}>
-            Remove
+          <button
+            className="icon-button red"
+            type="button"
+            onClick={() => onRecordRemove(albumTitle)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
           </button>
         </>
       )}

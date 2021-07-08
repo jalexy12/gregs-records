@@ -1,0 +1,11 @@
+h1 {
+  font-family: Zen Tokyo Zoo, cursive;
+  font-weight: 400;
+  font-size: 3rem;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

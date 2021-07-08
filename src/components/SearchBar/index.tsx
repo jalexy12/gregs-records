@@ -1,4 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   handleSearchChange: ChangeEventHandler;
@@ -14,8 +16,8 @@ export default function SearchBar({
   return (
     <div className="search-bar">
       <input type="text" onChange={handleSearchChange} value={searchValue} />
-      <button type="button" onClick={handleClear}>
-        Clear Search
+      <button className="icon-button red" type="button" onClick={handleClear}>
+        <FontAwesomeIcon icon={faTimesCircle} />
       </button>
     </div>
   );

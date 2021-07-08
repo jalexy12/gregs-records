@@ -1,6 +1,8 @@
 import React from "react";
 import { RecordCondition } from "../../types";
 import useManageLocalEdit from "../../hooks/useManageLocalEdit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   recordData: any;
@@ -58,11 +60,19 @@ export default function RecordForm({
         />
       </div>
 
-      <button type="button" onClick={(e) => onSave(unsavedData)}>
-        Save
+      <button
+        className="icon-button blue"
+        type="button"
+        onClick={() => onSave(unsavedData)}
+      >
+        <FontAwesomeIcon icon={faCheck} />
       </button>
-      <button type="button" onClick={(e) => onCancel()}>
-        Cancel
+      <button
+        className="icon-button red"
+        type="button"
+        onClick={() => onCancel()}
+      >
+        <FontAwesomeIcon icon={faTimesCircle} />
       </button>
     </>
   );

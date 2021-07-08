@@ -54,78 +54,88 @@ function App() {
   });
 
   return (
-    <RecordList>
-      <RecordListHeader>
-        <h3>Records</h3>
-        <Pagination
-          currentPage={currentPage}
-          handlePageUp={pageUp}
-          handlePageDown={pageDown}
-          handleJumpToPage={jumpToPage}
-          allPages={allPages}
-        />
-        <SearchBar
-          handleSearchChange={handleSearchChange}
-          handleClear={handleSearchClear}
-          searchValue={searchValue}
-        />
-        <button onClick={onStartCreateNew}>Create New</button>
-      </RecordListHeader>
-      <RecordListContent loading={loading}>
-        <RecordListHeadingRow
-          titles={["Title", "Year", "Condition", "Artist Name"]}
-        />
-        {newRecord && (
-          <div className="RecordList_item">
-            <RecordForm
-              recordData={newRecord}
-              onSave={(recordToCreate: Record) =>
+    <main>
+      <h1>Greg's Records</h1>
+      <RecordList>
+        <RecordListHeader>
+          <div className="button-container">
+            <button
+              className="icon-button blue"
+              type="button"
+              onClick={onStartCreateNew}
+            >
+              Create New
+            </button>
+          </div>
+          <SearchBar
+            handleSearchChange={handleSearchChange}
+            handleClear={handleSearchClear}
+            searchValue={searchValue}
+          />
+          <Pagination
+            currentPage={currentPage}
+            handlePageUp={pageUp}
+            handlePageDown={pageDown}
+            handleJumpToPage={jumpToPage}
+            allPages={allPages}
+          />
+        </RecordListHeader>
+        <RecordListContent loading={loading}>
+          <RecordListHeadingRow
+            titles={["Title", "Year", "Condition", "Artist Name"]}
+          />
+          {newRecord && (
+            <div className="RecordList_item">
+              <RecordForm
+                recordData={newRecord}
+                onSave={(recordToCreate: Record) =>
+                  dispatch({
+                    type: RecordActionList.SAVE_NEW_RECORD,
+                    payload: recordToCreate,
+                  })
+                }
+                onCancel={() =>
+                  dispatch({ type: RecordActionList.CANCEL_CREATE })
+                }
+                inputRef={inputRef}
+              />
+            </div>
+          )}
+          {filterResults(recordData).map((record: Record) => (
+            <RecordListItem
+              key={record.albumTitle}
+              record={record}
+              isEditing={recordBeingEdited === record.albumTitle}
+              toggleEdit={toggleEdit}
+              onRecordRemove={(removalRecordName: string) =>
                 dispatch({
-                  type: RecordActionList.SAVE_NEW_RECORD,
-                  payload: recordToCreate,
+                  type: RecordActionList.REMOVE_RECORD,
+                  payload: removalRecordName,
                 })
               }
-              onCancel={() =>
-                dispatch({ type: RecordActionList.CANCEL_CREATE })
+              onRecordSave={(newRecord: Record) =>
+                dispatch({
+                  type: RecordActionList.UPDATE_RECORD,
+                  payload: {
+                    previousAlbumTitle: record.albumTitle,
+                    record: newRecord,
+                  },
+                })
               }
-              inputRef={inputRef}
             />
-          </div>
-        )}
-        {filterResults(recordData).map((record: Record) => (
-          <RecordListItem
-            key={record.albumTitle}
-            record={record}
-            isEditing={recordBeingEdited === record.albumTitle}
-            toggleEdit={toggleEdit}
-            onRecordRemove={(removalRecordName: string) =>
-              dispatch({
-                type: RecordActionList.REMOVE_RECORD,
-                payload: removalRecordName,
-              })
-            }
-            onRecordSave={(newRecord: Record) =>
-              dispatch({
-                type: RecordActionList.UPDATE_RECORD,
-                payload: {
-                  previousAlbumTitle: record.albumTitle,
-                  record: newRecord,
-                },
-              })
-            }
+          ))}
+        </RecordListContent>
+        <RecordListFooter>
+          <Pagination
+            currentPage={currentPage}
+            handlePageUp={pageUp}
+            handlePageDown={pageDown}
+            handleJumpToPage={jumpToPage}
+            allPages={allPages}
           />
-        ))}
-      </RecordListContent>
-      <RecordListFooter>
-        <Pagination
-          currentPage={currentPage}
-          handlePageUp={pageUp}
-          handlePageDown={pageDown}
-          handleJumpToPage={jumpToPage}
-          allPages={allPages}
-        />
-      </RecordListFooter>
-    </RecordList>
+        </RecordListFooter>
+      </RecordList>
+    </main>
   );
 }
 

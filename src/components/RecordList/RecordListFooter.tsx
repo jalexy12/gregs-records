@@ -5,5 +5,5 @@ export default function RecordListFooter({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return <div>{children}</div>;
+  return <div className="RecordList_footer">{children}</div>;
 }
